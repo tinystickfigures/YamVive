@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Net;
-using System.Net.HttpWebRequest;
 
 namespace AssemblyCSharp
 {
@@ -23,4 +22,3 @@ namespace AssemblyCSharp
 		}
 	}
 }
-
