@@ -6,3 +6,4 @@ Temp/
 YamVive.sln
 YamVive.CSharp.csproj
 YamVive.CSharp.Editor.csproj
+**/*.DS_Store
