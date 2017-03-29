@@ -1,5 +1,6 @@
-﻿using System;
+﻿using RestSharp;
 using System.Net;
+using UnityEngine;
 
 namespace AssemblyCSharp
 {
@@ -7,18 +8,21 @@ namespace AssemblyCSharp
 	{
 		private string BASE_URI = "https://www.yammer.com/";
 		private string BEARER_TOKEN = "6631141-Lyo0n4Z0xpqQCUpkUCpuA";
-		private HttpWebRequest request;
 
-		public YammerRequest (string method, string url)
+		public YammerRequest (Method method, string url)
 		{
-			request = (HttpWebRequest)WebRequest.Create(BASE_URI + url);
-			request.Method = method;
-			request.Accept = "application/json";
-			request.Headers.Add ("Authorization", "Bearer " + BEARER_TOKEN);
-		}
-		public HttpWebResponse getResponse ()
-		{
-			return (HttpWebResponse) request.GetResponse ();
-		}
+            var client = new RestClient();
+            client.BaseUrl = BASE_URI;
+            
+            var request = new RestRequest();
+            request.Method = method;
+            request.Resource = url;
+            request.AddHeader("Authorization", "Bearer " + BEARER_TOKEN);
+
+            client.ExecuteAsync(request, (response) =>
+            {
+                Debug.Log(response.Content);
+            });
+        }
 	}
 }
