@@ -4,7 +4,7 @@ using System;
 using UnityEngine.UI;
 using VRTK;
 
-[RequireComponent(typeof(PointerResponder))]
+[RequireComponent(typeof(PointerListener))]
 public class Message : MonoBehaviour
 {
     public float Amplitude = 0.1f;
@@ -20,11 +20,9 @@ public class Message : MonoBehaviour
         set { _text.text = value; }
     }
 
-    void Awake()
+    void Start()
     {
-        _y0 = gameObject.transform.position.y;
-
-        var pointerResponder = GetComponent<PointerResponder>();
+        var pointerResponder = GetComponent<PointerListener>();
         pointerResponder.AddOnClickEvent(OnClick);
         pointerResponder.AddOnEnterEvent(OnEnter);
         pointerResponder.AddOnExitEvent(OnExit);
@@ -35,6 +33,11 @@ public class Message : MonoBehaviour
 	
 	void Update ()
     {
+        if (_y0 == 0)
+        {
+            _y0 = gameObject.transform.position.y;
+        }
+
         gameObject.transform.position = new Vector2(gameObject.transform.position.x, _y0 + Amplitude * Mathf.Sin(Speed * Time.time));
     }
 

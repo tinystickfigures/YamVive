@@ -2,33 +2,59 @@
 using System.Collections;
 using System.Collections.Generic;
 
-[RequireComponent(typeof(PointerResponder))]
+[RequireComponent(typeof(PointerListener))]
 public class Mailbox : MonoBehaviour
 {
-    string[] _messageStrings = { "This is a Yammer message", "Another Yammer message", "Yammer is the best" };
+    List<string> _messageStrings = new List<string>() { "This is a Yammer message", "Another Yammer message", "Yammer is the best" };
 
     public Message _messagePrefab;
 
-    List<Message> _messages;
+    List<Message> _messages = new List<Message>();
 
     public float MessageHeight;
     public float MessageSpacing;
 
+    bool _active;
+
 	// Use this for initialization
 	void Start ()
     {
-        var pointerResponder = GetComponent<PointerResponder>();
+        var pointerResponder = GetComponent<PointerListener>();
         pointerResponder.AddOnClickEvent(OnClick);
     }
 	
     void OnClick()
     {
-        var position = gameObject.transform.position;
-        foreach (var msg in _messageStrings)
+        if (_active)
+        {
+            HideMessages();
+        }
+        else
+        {
+            _messages.Clear();
+            ShowMessages(_messageStrings);
+        }
+    }
+
+    void ShowMessages(List<string> strings)
+    {
+        _messages.Clear();
+        var position = gameObject.transform.position + new Vector3(0, MessageHeight, -1 * (strings.Count - 1) * MessageSpacing/2f);
+        foreach (var msg in strings)
         {
             var message = Instantiate(_messagePrefab, gameObject.transform) as Message;
             message.Text = msg;
-            //message.transform.position = 
+            message.transform.position = position;
+            position += new Vector3(0, 0, MessageSpacing);
+            _messages.Add(message);
+        }
+    }
+
+    void HideMessages()
+    {
+        foreach (var message in _messages)
+        {
+            Destroy(message.gameObject);
         }
     }
 }
