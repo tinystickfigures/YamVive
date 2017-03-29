@@ -1,0 +1,8 @@
+Library/
+.vs/YamVive/v14/.suo
+Assets/SteamVR/Scenes/example.unity
+Assets/SteamVR/Scenes/example.unity.meta
+Temp/
+YamVive.sln
+YamVive.CSharp.csproj
+YamVive.CSharp.Editor.csproj
