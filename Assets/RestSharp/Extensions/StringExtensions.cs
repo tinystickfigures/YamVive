@@ -40,7 +40,7 @@ namespace RestSharp.Extensions
 	{
 		public static string UrlDecode(this string input)
 		{
-			return HttpUtility.UrlDecode(input);
+            return "";// HttpUtility.UrlDecode(input);
 		}
 
 		/// <summary>
@@ -54,12 +54,12 @@ namespace RestSharp.Extensions
 
 		public static string HtmlDecode(this string input)
 		{
-			return HttpUtility.HtmlDecode(input);
+            return "";// HttpUtility.HtmlDecode(input);
 		}
 
 		public static string HtmlEncode(this string input)
 		{
-			return HttpUtility.HtmlEncode(input);
+            return "";// HttpUtility.HtmlEncode(input);
 		}
 
 #if FRAMEWORK

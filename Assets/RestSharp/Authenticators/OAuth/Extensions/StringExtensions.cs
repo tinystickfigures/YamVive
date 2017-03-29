@@ -103,11 +103,6 @@ namespace RestSharp.Authenticators.OAuth.Extensions
 				);
 		}
 
-		private const RegexOptions Options =
-#if !WINDOWS_PHONE && !SILVERLIGHT
-			RegexOptions.Compiled | RegexOptions.IgnoreCase;
-#else
-			RegexOptions.IgnoreCase;
-#endif
+        private const RegexOptions Options = RegexOptions.IgnoreCase;
 	}
 }

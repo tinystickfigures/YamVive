@@ -22,6 +22,16 @@ public class PointerListener : MonoBehaviour {
         events.TriggerPressed += OnClick;
     }
 
+    void OnDestroy()
+    {
+        var pointer = FindObjectOfType<VRTK_Pointer>() as VRTK_Pointer;
+        pointer.DestinationMarkerEnter -= OnEnter;
+        pointer.DestinationMarkerExit -= OnExit;
+
+        var events = FindObjectOfType<VRTK_ControllerEvents>();
+        events.TriggerPressed -= OnClick;
+    }
+
     public void AddOnEnterEvent(Action action)
     {
         _enterEvents.Add(action);

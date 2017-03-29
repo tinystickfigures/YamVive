@@ -28,11 +28,13 @@ public class Mailbox : MonoBehaviour
         if (_active)
         {
             HideMessages();
+            _active = false;
         }
         else
         {
             _messages.Clear();
             ShowMessages(_messageStrings);
+            _active = true;
         }
     }
 

@@ -20,7 +20,7 @@ public class Message : MonoBehaviour
         set { _text.text = value; }
     }
 
-    void Start()
+    void Awake()
     {
         var pointerResponder = GetComponent<PointerListener>();
         pointerResponder.AddOnClickEvent(OnClick);
@@ -38,7 +38,7 @@ public class Message : MonoBehaviour
             _y0 = gameObject.transform.position.y;
         }
 
-        gameObject.transform.position = new Vector2(gameObject.transform.position.x, _y0 + Amplitude * Mathf.Sin(Speed * Time.time));
+        gameObject.transform.position = new Vector3(gameObject.transform.position.x, _y0 + Amplitude * Mathf.Sin(Speed * Time.time), gameObject.transform.position.z);
     }
 
     public void OnClick()
