@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using VRTK;
 
 [RequireComponent(typeof(PointerResponder))]
-public class MessageBox : MonoBehaviour
+public class Message : MonoBehaviour
 {
     public float Amplitude = 0.1f;
     public float Speed = 3f;
@@ -13,6 +13,12 @@ public class MessageBox : MonoBehaviour
     float _y0;
 
     Text _text;
+
+    public string Text
+    {
+        get { return _text.text; }
+        set { _text.text = value; }
+    }
 
     void Awake()
     {
