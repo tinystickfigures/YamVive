@@ -1,5 +1,4 @@
 ﻿using RestSharp;
-using System.Net;
 using UnityEngine;
 
 namespace AssemblyCSharp
