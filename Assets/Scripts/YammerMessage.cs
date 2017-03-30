@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class YammerMessage : MonoBehaviour
+public class YammerMessage
 {
     public int id;
     public int senderId;
