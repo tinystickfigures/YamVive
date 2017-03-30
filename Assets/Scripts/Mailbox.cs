@@ -14,11 +14,14 @@ public class Mailbox : MonoBehaviour
 
     bool _active;
 
+    YammerController _yammer;
+
 	// Use this for initialization
 	void Start ()
     {
         var pointerResponder = GetComponent<PointerListener>();
         pointerResponder.AddOnClickEvent(OnClick);
+        _yammer = FindObjectOfType<YammerController>();
     }
 	
     void OnClick()
@@ -31,8 +34,7 @@ public class Mailbox : MonoBehaviour
         else
         {
             _messages.Clear();
-            var yammerController = new YammerController();
-            yammerController.fetchMessages((messages) =>
+            _yammer.fetchMessages((messages) =>
             {
                 ShowMessages(messages);
                 _active = true;
@@ -48,7 +50,7 @@ public class Mailbox : MonoBehaviour
         {
             var message = Instantiate(_messagePrefab, gameObject.transform) as MessageBox;
             message.Message = msg.body;
-            message.Name = getSenderName(msg.senderId);
+            message.PopulateNameAndMugshot(msg.senderId);
             message.transform.position = position;
             position += new Vector3(0, 0, MessageSpacing);
             _messages.Add(message);

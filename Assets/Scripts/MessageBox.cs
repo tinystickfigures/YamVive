@@ -19,16 +19,6 @@ public class MessageBox : MonoBehaviour
         set { MessageText.text = value; }
     }
 
-    public string Name
-    {
-        get { return NameText.text; }
-        set
-        {
-            NameText.text = "From: " + value;
-            MugshotImage.sprite = MugshotDatabase.GetMugshot(value);
-        }
-    }
-
     void Awake()
     {
         var pointerResponder = GetComponent<PointerListener>();
@@ -51,13 +41,15 @@ public class MessageBox : MonoBehaviour
 
         gameObject.transform.position = new Vector3(gameObject.transform.position.x, _y0 + Amplitude * Mathf.Sin(Speed * Time.time), gameObject.transform.position.z);
     }
+    
+    public void PopulateNameAndMugshot(int id)
+    {
+        NameText.text = MugshotDatabase.GetName(id);
+        MugshotImage.sprite = MugshotDatabase.GetMugshot(id);
+    }
 
     public void OnClick()
     {
-        foreach (Transform child in GetComponentInChildren<Transform>())
-        {
-            Destroy(child);
-        }
         Destroy(gameObject);
     }
 
@@ -69,5 +61,10 @@ public class MessageBox : MonoBehaviour
     public void OnExit()
     {
         MessageText.color = Color.gray;
+    }
+
+    void OnDestroy()
+    {
+        Debug.Log("Destroyed");
     }
 }
