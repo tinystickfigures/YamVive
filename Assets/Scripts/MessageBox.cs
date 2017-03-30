@@ -5,19 +5,31 @@ using UnityEngine.UI;
 using VRTK;
 
 [RequireComponent(typeof(PointerListener))]
-public class Message : MonoBehaviour
+public class MessageBox : MonoBehaviour
 {
     public float Amplitude = 0.1f;
     public float Speed = 3f;
 
     float _y0;
 
-    Text _text;
+    public Text MessageText;
+    public Text NameText;
+    public Image MugshotImage;
 
-    public string Text
+    public string Message
     {
-        get { return _text.text; }
-        set { _text.text = value; }
+        get { return MessageText.text; }
+        set { MessageText.text = value; }
+    }
+
+    public string Name
+    {
+        get { return NameText.text; }
+        set
+        {
+            NameText.text = "From: " + value;
+            MugshotImage.sprite = MugshotDatabase.GetMugshot(value);
+        }
     }
 
     void Awake()
@@ -26,9 +38,8 @@ public class Message : MonoBehaviour
         pointerResponder.AddOnClickEvent(OnClick);
         pointerResponder.AddOnEnterEvent(OnEnter);
         pointerResponder.AddOnExitEvent(OnExit);
-
-        _text = GetComponentInChildren<Text>();
-        _text.color = Color.gray;
+        
+        MessageText.color = Color.gray;
     }
 	
 	void Update ()
@@ -43,16 +54,16 @@ public class Message : MonoBehaviour
 
     public void OnClick()
     {
-        _text.color = Color.red;
+        Destroy(gameObject);
     }
 
     public void OnEnter()
     {
-        _text.color = Color.white;
+        MessageText.color = Color.white;
     }
 
     public void OnExit()
     {
-        _text.color = Color.gray;
+        MessageText.color = Color.gray;
     }
 }

@@ -5,11 +5,16 @@ using System.Collections.Generic;
 [RequireComponent(typeof(PointerListener))]
 public class Mailbox : MonoBehaviour
 {
-    List<string> _messageStrings = new List<string>() { "This is a Yammer message", "Another Yammer message", "Yammer is the best" };
+    List<YammerMessage> _yammerMessages = new List<YammerMessage>()
+    {
+        new YammerMessage("Harry", "Help, my potions homework keeps exploding"),
+        new YammerMessage("Hermione", "Let's meet up for study group"),
+        new YammerMessage("Draco", "DAE think Harry smells bad??")
+    };
 
-    public Message _messagePrefab;
+    public MessageBox _messagePrefab;
 
-    List<Message> _messages = new List<Message>();
+    List<MessageBox> _messages = new List<MessageBox>();
 
     public float MessageHeight;
     public float MessageSpacing;
@@ -33,19 +38,20 @@ public class Mailbox : MonoBehaviour
         else
         {
             _messages.Clear();
-            ShowMessages(_messageStrings);
+            ShowMessages(_yammerMessages);
             _active = true;
         }
     }
 
-    void ShowMessages(List<string> strings)
+    void ShowMessages(List<YammerMessage> yammerMessages)
     {
         _messages.Clear();
-        var position = gameObject.transform.position + new Vector3(0, MessageHeight, -1 * (strings.Count - 1) * MessageSpacing/2f);
-        foreach (var msg in strings)
+        var position = gameObject.transform.position + new Vector3(0, MessageHeight, -1 * (yammerMessages.Count - 1) * MessageSpacing/2f);
+        foreach (var msg in yammerMessages)
         {
-            var message = Instantiate(_messagePrefab, gameObject.transform) as Message;
-            message.Text = msg;
+            var message = Instantiate(_messagePrefab, gameObject.transform) as MessageBox;
+            message.Message = msg.Message;
+            message.Name = msg.Name;
             message.transform.position = position;
             position += new Vector3(0, 0, MessageSpacing);
             _messages.Add(message);
@@ -56,7 +62,10 @@ public class Mailbox : MonoBehaviour
     {
         foreach (var message in _messages)
         {
-            Destroy(message.gameObject);
+            if (message != null)
+            {
+                Destroy(message.gameObject);
+            }
         }
     }
 }
