@@ -4,7 +4,6 @@ using System.Collections.Generic;
 [RequireComponent(typeof(PointerListener))]
 public class Mailbox : MonoBehaviour
 {
-    List<YammerMessage> _yammerMessages;
 
     public MessageBox _messagePrefab;
 
@@ -18,12 +17,6 @@ public class Mailbox : MonoBehaviour
 	// Use this for initialization
 	void Start ()
     {
-        var yammerController = new YammerController();
-        yammerController.fetchMessages((messages) =>
-        {
-            _yammerMessages = messages;
-            ShowMessages(messages);
-        });
         var pointerResponder = GetComponent<PointerListener>();
         pointerResponder.AddOnClickEvent(OnClick);
     }
@@ -38,8 +31,12 @@ public class Mailbox : MonoBehaviour
         else
         {
             _messages.Clear();
-            ShowMessages(_yammerMessages);
-            _active = true;
+            var yammerController = new YammerController();
+            yammerController.fetchMessages((messages) =>
+            {
+                ShowMessages(messages);
+                _active = true;
+            });
         }
     }
 
