@@ -2,6 +2,7 @@ using UnityEngine;
 using CI.HttpClient;
 using System.Net;
 using System.Security.Cryptography.X509Certificates;
+using SimpleJSON;
 
 namespace AssemblyCSharp
 {
@@ -22,9 +23,16 @@ namespace AssemblyCSharp
 			client.Headers.Add (HttpRequestHeader.Accept, "application/json");
 
 			client.GetString(new System.Uri(BASE_URI + url), (r) => {
-				var data = r.Data;
-				Debug.Log(data);
-			});
+                JSONNode data = JSON.Parse(r.Data);
+                JSONArray messages = (JSONArray) data["messages"];
+                Debug.Log(messages);
+                foreach (JSONNode message in messages)
+                {
+
+                    Debug.Log(message["id"]);
+                    Debug.Log(message["body"][0]);
+                }
+            });
         }
 	}
 }
