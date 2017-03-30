@@ -12,7 +12,7 @@ public class YammerController : MonoBehaviour {
         yammerClient = new YammerClient();
 	}
 
-    public void fetchMessages (System.Action<System.Collections.Generic.List<YammerMessage>> callback)
+    public void fetchMessages (System.Action<List<YammerMessage>> callback)
     {
         yammerClient = new YammerClient();
         yammerClient.getMessages(11186532, (messages) =>

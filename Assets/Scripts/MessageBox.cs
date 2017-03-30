@@ -13,20 +13,18 @@ public class MessageBox : MonoBehaviour
     public Text NameText;
     public Image MugshotImage;
 
+    //public ParticleSystem SpawnParticles;
+    //public ParticleSystem DestroyParticles;
+
     public string Message
     {
         get { return MessageText.text; }
         set { MessageText.text = value; }
     }
 
-    public string Name
+    public MessageBox()
     {
-        get { return NameText.text; }
-        set
-        {
-            NameText.text = "From: " + value;
-            MugshotImage.sprite = MugshotDatabase.GetMugshot(value);
-        }
+        Debug.Log("hello");
     }
 
     void Awake()
@@ -37,6 +35,8 @@ public class MessageBox : MonoBehaviour
         pointerResponder.AddOnExitEvent(OnExit);
         
         MessageText.color = Color.gray;
+
+        //Instantiate(SpawnParticles, gameObject.transform);
     }
 	
 	void Update ()
@@ -48,10 +48,17 @@ public class MessageBox : MonoBehaviour
 
         gameObject.transform.position = new Vector3(gameObject.transform.position.x, _y0 + Amplitude * Mathf.Sin(Speed * Time.time), gameObject.transform.position.z);
     }
+    
+    public void PopulateNameAndMugshot(int id)
+    {
+        NameText.text = MugshotDatabase.GetName(id);
+        MugshotImage.sprite = MugshotDatabase.GetMugshot(id);
+    }
 
     public void OnClick()
     {
-        Destroy(gameObject);
+        //Instantiate(DestroyParticles, gameObject.transform);
+        //Destroy(gameObject);
     }
 
     public void OnEnter()
@@ -62,5 +69,10 @@ public class MessageBox : MonoBehaviour
     public void OnExit()
     {
         MessageText.color = Color.gray;
+    }
+
+    void OnDestroy()
+    {
+        Debug.Log("Destroyed");
     }
 }
