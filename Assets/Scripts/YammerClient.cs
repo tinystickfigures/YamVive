@@ -21,7 +21,6 @@ namespace AssemblyCSharp
 			client = new HttpClient();
 			//client.Certificates.Add(X509Certificate.CreateFromCertFile("/Assets/www.yammer.com.crt"));
 
-			StringContent content = new StringContent ("{}");
 			client.CustomHeaders.Add ("Authorization", "Bearer " + BEARER_TOKEN);
 			client.Headers.Add (HttpRequestHeader.Accept, "application/json");
         }
@@ -34,7 +33,7 @@ namespace AssemblyCSharp
         public void getMessages (int groupId, System.Action<SimpleJSON.JSONArray> callback)
         {
             string url = GROUP + groupId;
-            this.get(url, (response) => {
+            get(url, (response) => {
                 JSONNode data = JSON.Parse(response.Data);
                 JSONArray messages = (JSONArray)data["messages"];
                 callback(messages);

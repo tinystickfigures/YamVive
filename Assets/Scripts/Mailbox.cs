@@ -1,16 +1,10 @@
 ﻿using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
 
 [RequireComponent(typeof(PointerListener))]
 public class Mailbox : MonoBehaviour
 {
-    List<YammerMessage> _yammerMessages = new List<YammerMessage>()
-    {
-        new YammerMessage("Harry", "Help, my potions homework keeps exploding"),
-        new YammerMessage("Hermione", "Let's meet up for study group"),
-        new YammerMessage("Draco", "DAE think Harry smells bad??")
-    };
+    List<YammerMessage> _yammerMessages;
 
     public MessageBox _messagePrefab;
 
@@ -24,6 +18,12 @@ public class Mailbox : MonoBehaviour
 	// Use this for initialization
 	void Start ()
     {
+        var yammerController = new YammerController();
+        yammerController.fetchMessages((messages) =>
+        {
+            _yammerMessages = messages;
+            ShowMessages(messages);
+        });
         var pointerResponder = GetComponent<PointerListener>();
         pointerResponder.AddOnClickEvent(OnClick);
     }
@@ -50,12 +50,19 @@ public class Mailbox : MonoBehaviour
         foreach (var msg in yammerMessages)
         {
             var message = Instantiate(_messagePrefab, gameObject.transform) as MessageBox;
-            message.Message = msg.Message;
-            message.Name = msg.Name;
+            message.Message = msg.body;
+            message.Name = getSenderName(msg.senderId);
             message.transform.position = position;
             position += new Vector3(0, 0, MessageSpacing);
             _messages.Add(message);
         }
+    }
+
+    private string getSenderName (int senderId)
+    {
+        // TODO
+        Debug.Log("getting sender name for " + senderId);
+        return "Dumbles";
     }
 
     void HideMessages()

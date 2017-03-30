@@ -1,20 +1,32 @@
 using UnityEngine;
 using AssemblyCSharp;
 using SimpleJSON;
+using System.Collections.Generic;
 
 public class YammerController : MonoBehaviour {
 
+    private YammerClient yammerClient;
+
     // Use this for initialization
     void Start () {
-        var yammerClient = new YammerClient();
+        yammerClient = new YammerClient();
+	}
+
+    public void fetchMessages (System.Action<System.Collections.Generic.List<YammerMessage>> callback)
+    {
+        yammerClient = new YammerClient();
         yammerClient.getMessages(11186532, (messages) =>
         {
-            Debug.Log(messages);
+            List<YammerMessage> yammerMessages = new List<YammerMessage>();
             foreach (JSONNode message in messages)
             {
-                Debug.Log(message["id"]);
-                Debug.Log(message["body"][0]);
+                int id = message["id"];
+                int senderId = message["sender_id"];
+                string body = message["body"]["parsed"];
+                YammerMessage yammerMessage = new YammerMessage(id, senderId, body);
+                yammerMessages.Add(yammerMessage);
             }
+            callback(yammerMessages);
         });
-	}
+    }
 }

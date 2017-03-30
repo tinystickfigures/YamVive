@@ -1,8 +1,5 @@
 ﻿using UnityEngine;
-using System.Collections;
-using System;
 using UnityEngine.UI;
-using VRTK;
 
 [RequireComponent(typeof(PointerListener))]
 public class MessageBox : MonoBehaviour

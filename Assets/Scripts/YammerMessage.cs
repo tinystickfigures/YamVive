@@ -1,15 +1,15 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class YammerMessage : MonoBehaviour
 {
-    public string Name;
-    public string Message;
+    public int id;
+    public int senderId;
+    public string body;
 
-    public YammerMessage(string name, string message)
+    public YammerMessage(int _id, int _senderId, string _body)
     {
-        Name = name;
-        Message = message;
+        id = _id;
+        senderId = _senderId;
+        body = _body;
     }
 }
