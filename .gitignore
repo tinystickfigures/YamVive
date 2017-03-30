@@ -7,4 +7,4 @@ YamVive.sln
 YamVive.CSharp.csproj
 YamVive.CSharp.Editor.csproj
 **/*.DS_Store
-obj/Debug/
+obj/
