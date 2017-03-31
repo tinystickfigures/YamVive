@@ -7,3 +7,6 @@ YamVive.sln
 YamVive.CSharp.csproj
 YamVive.CSharp.Editor.csproj
 **/*.DS_Store
+Assets/HorrorEnvironment_AbandonedManor/
+Assets/Asset Packs/
+Assets/Resources/Models/Materials/Leaf.mat.meta

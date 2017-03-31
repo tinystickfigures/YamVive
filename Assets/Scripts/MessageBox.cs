@@ -37,6 +37,9 @@ public class MessageBox : MonoBehaviour
         pointerResponder.AddOnExitEvent(OnExit);
         
         MessageText.color = Color.gray;
+
+        Amplitude += Random.Range(-Amplitude / 2f, Amplitude / 2f);
+        Speed += Random.Range(-1f, 1f);
     }
 	
 	void Update ()
@@ -51,6 +54,10 @@ public class MessageBox : MonoBehaviour
 
     public void OnClick()
     {
+        foreach (Transform child in GetComponentInChildren<Transform>())
+        {
+            Destroy(child);
+        }
         Destroy(gameObject);
     }
 
